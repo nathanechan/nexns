@@ -36,7 +36,7 @@ export default function WorkspacePage() {
   return (
     <AppShell
       title="Workspace"
-      description="Manage members, projects, shared AI assets, role access, quota limits, and audit activity for the team."
+      description="Manage members, projects, shared assets, role access, quota limits, and audit activity for the team."
       actions={
         <Button className="gap-2">
           <Users size={16} />
@@ -207,7 +207,7 @@ export default function WorkspacePage() {
           <div className="mb-4 flex items-center justify-between gap-3">
             <h2 className="flex items-center gap-2 text-lg font-semibold">
               <FileText size={18} className="text-primary" />
-              Shared AI assets
+              Shared workspace assets
             </h2>
             <Button variant="secondary" size="sm">Upload asset</Button>
           </div>

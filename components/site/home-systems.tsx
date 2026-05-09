@@ -93,12 +93,12 @@ export function HomeSystems() {
       <section className="border-y border-white/10 bg-white/[0.03] py-20">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[0.92fr_1.08fr]">
           <div>
-            <p className="text-sm uppercase tracking-[0.26em] text-primary">Interactive route scoring</p>
+              <p className="text-sm uppercase tracking-[0.26em] text-primary">Route scoring</p>
             <h2 className="mt-4 text-3xl font-semibold sm:text-5xl">
               Show the route decision before the answer is generated.
             </h2>
             <p className="mt-5 text-sm leading-7 text-muted-foreground sm:text-base">
-              V9.1 adds a more dynamic product feel: operators can see how task type changes model selection,
+              Operators can see how task type changes model selection,
               confidence, latency, savings, and policy constraints.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
@@ -198,13 +198,13 @@ export function HomeSystems() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6">
           <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
             <div>
-              <p className="text-sm uppercase tracking-[0.26em] text-accent">Bilingual product language</p>
+              <p className="text-sm uppercase tracking-[0.26em] text-accent">Product language</p>
               <h2 className="mt-4 text-3xl font-semibold sm:text-5xl">
                 Professional English and Chinese terms for a serious operating platform.
               </h2>
               <p className="mt-5 text-sm leading-7 text-muted-foreground sm:text-base">
-                V9.2 starts a consistent product glossary so the interface can scale cleanly across English and Chinese
-                without sounding like a prototype or a pitch page.
+                A consistent product glossary helps the interface scale cleanly across English and Chinese while
+                keeping the tone precise, stable, and commercial.
               </p>
             </div>
             <div className="grid gap-3 md:grid-cols-2">
@@ -234,12 +234,12 @@ export function HomeSystems() {
       <section className="border-y border-white/10 bg-white/[0.03] py-20">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_0.9fr]">
           <div>
-            <p className="text-sm uppercase tracking-[0.26em] text-primary">Conversion path</p>
+              <p className="text-sm uppercase tracking-[0.26em] text-primary">Setup path</p>
             <h2 className="mt-4 text-3xl font-semibold sm:text-5xl">
               Move from homepage to governed operation in four steps.
             </h2>
             <p className="mt-5 text-sm leading-7 text-muted-foreground sm:text-base">
-              V9.3 makes the homepage lead naturally into setup: workspace, provider keys, first route, and value tracking.
+              The homepage now leads naturally into setup: workspace, provider keys, first route, and value tracking.
             </p>
             <div className="mt-8 grid gap-3 md:grid-cols-2">
               {conversionSteps.map((step, index) => {
@@ -265,7 +265,7 @@ export function HomeSystems() {
 
           <div className="rounded-3xl border border-primary/20 bg-primary/[0.065] p-5">
             <p className="text-sm uppercase tracking-[0.24em] text-primary">Security readiness</p>
-            <h2 className="mt-3 text-2xl font-semibold">V9.5 operating platform checklist.</h2>
+            <h2 className="mt-3 text-2xl font-semibold">Operating platform checklist.</h2>
             <div className="mt-5 space-y-3">
               {readiness.map(([label, detail, status]) => (
                 <div key={label} className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-background/45 p-4">

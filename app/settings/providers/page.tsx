@@ -100,10 +100,10 @@ export default function ProviderVaultPage() {
           <div className="relative p-6 sm:p-8">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.18),transparent_34%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_46%)]" />
             <div className="relative">
-              <Badge className="border-primary/30 bg-primary/10 text-primary">V8.2 encrypted BYOK vault</Badge>
+              <Badge className="border-primary/30 bg-primary/10 text-primary">Encrypted BYOK vault</Badge>
               <Vault className="mt-6 text-primary" size={30} />
               <h1 className="mt-5 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
-                Customer-owned AI keys, routed through one governed layer.
+                Customer-owned provider keys, routed through one governed layer.
               </h1>
               <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
                 The vault reduces platform cash burn, keeps provider access under customer control, and gives the routing
@@ -208,11 +208,11 @@ export default function ProviderVaultPage() {
       <section className="route-scan mt-5 rounded-2xl border border-primary/20 bg-primary/[0.065] p-5">
         <div className="grid gap-5 lg:grid-cols-[0.72fr_1.28fr]">
           <div>
-            <Badge className="border-primary/30 bg-primary/10 text-primary">production API path</Badge>
-            <h2 className="mt-3 text-lg font-semibold">Encrypted key lifecycle is wired for the real product.</h2>
+            <Badge className="border-primary/30 bg-primary/10 text-primary">Key lifecycle</Badge>
+            <h2 className="mt-3 text-lg font-semibold">Encrypted provider access with operational controls.</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              V8.2 adds server-side encryption, provider health testing, and audit logging. The vault now has concrete
-              routes for saving, testing, and governing customer-owned keys.
+              Server-side encryption, provider health testing, and audit logging keep customer-owned keys governed
+              through the same operational layer as routing policy.
             </p>
           </div>
           <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">

@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "nexns | Smart routing for every AI operation",
+  title: "nexns | Smart routing for every operation",
   description:
-    "A premium AI aggregation platform with unified chat, intelligent model routing, BYOK, analytics, and governance."
+    "A premium model operations platform with unified chat, intelligent routing, BYOK, analytics, and governance."
 };
 
 export default function RootLayout({

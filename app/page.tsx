@@ -24,8 +24,8 @@ import { getHomepageMetrics } from "@/lib/data/homepage-repository";
 const operatingLayers = [
   {
     icon: Workflow,
-    title: "Unified AI workspace",
-    text: "A single place for chat, files, model comparison, route replay, team memory, and shared AI workflows."
+    title: "Unified operations workspace",
+    text: "A single place for chat, files, model comparison, route replay, team memory, and shared intelligence workflows."
   },
   {
     icon: Route,
@@ -101,9 +101,9 @@ export default async function HomePage() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6">
             <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr]">
               <div>
-                <p className="text-sm uppercase tracking-[0.26em] text-primary">Operating system for AI usage</p>
+                <p className="text-sm uppercase tracking-[0.26em] text-primary">Operating system for model usage</p>
                 <h2 className="mt-4 text-3xl font-semibold sm:text-5xl">
-                  nexns turns fragmented AI access into one governed operating layer.
+                  nexns turns fragmented model access into one governed operating layer.
                 </h2>
                 <p className="mt-5 text-sm leading-7 text-muted-foreground sm:text-base">
                   Teams should not need to manually choose between every model, provider, cost curve, file limit, and
@@ -188,7 +188,7 @@ export default async function HomePage() {
                 The wedge is not model access. It is controlled execution.
               </h2>
               <p className="mt-5 text-sm leading-7 text-muted-foreground sm:text-base">
-                Generic AI workspaces give users a model menu. nexns gives teams a system for deciding, executing,
+                Generic model workspaces give users a provider menu. nexns gives teams a system for deciding, executing,
                 measuring, and governing AI usage across providers.
               </p>
             </div>
@@ -255,12 +255,12 @@ export default async function HomePage() {
                 <div>
                   <Badge className="border-primary/30 bg-primary/10 text-primary">
                     <Network size={14} className="mr-1" />
-                    secure AI operations
+                    secure model operations
                   </Badge>
-                  <h2 className="mt-4 text-3xl font-semibold sm:text-5xl">Start with routing. Grow into AI governance.</h2>
+                  <h2 className="mt-4 text-3xl font-semibold sm:text-5xl">Start with routing. Grow into operational governance.</h2>
                   <p className="mt-4 max-w-3xl text-sm leading-7 text-muted-foreground sm:text-base">
                     nexns is designed to become the control layer between teams, providers, policies, budgets, and
-                    every AI-powered workflow.
+                    every model-powered workflow.
                   </p>
                 </div>
                 <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">

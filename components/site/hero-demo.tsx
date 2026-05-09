@@ -48,14 +48,14 @@ export function HeroDemo() {
           className="pb-8"
         >
           <Badge className="border-primary/30 bg-primary/10 text-primary">
-            nexns / AI routing operations platform
+            nexns / model operations platform
           </Badge>
           <h1 className="mt-6 max-w-4xl text-balance text-5xl font-semibold leading-[1.02] tracking-normal sm:text-7xl">
-            Govern every AI request before it reaches a model.
+            Govern every request before it reaches a model.
           </h1>
           <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
             nexns gives teams one intelligent layer for model routing, BYOK control, policy enforcement, cost tracking,
-            provider fallback, and audit-ready reporting across the fast-moving AI stack.
+            provider fallback, and audit-ready reporting across the fast-moving model stack.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link href="/chat">

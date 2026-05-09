@@ -9,7 +9,7 @@ export const usageMetrics: UsageMetric[] = [
 
 export const businessMetrics = [
   {
-    label: "Monthly AI spend",
+    label: "Monthly model spend",
     value: "$3,056",
     delta: "-42%",
     description: "Reduced from projected $5,284 to $3,056."
@@ -161,7 +161,7 @@ export const providerHealth = [
 export const controlPlaneStats = [
   { label: "Active tenants", value: "118", detail: "+14 this month" },
   { label: "Managed routes", value: "24.8k", detail: "92% auto-routed" },
-  { label: "Budget protected", value: "$2.2k", detail: "42% lower AI spend" },
+  { label: "Budget protected", value: "$2.2k", detail: "42% lower model spend" },
   { label: "Audit coverage", value: "99.2%", detail: "Replay trail captured" }
 ];
 
@@ -175,7 +175,7 @@ export const controlPlaneAlerts = [
   {
     title: "Team workspace near budget cap",
     severity: "medium",
-    detail: "Aster Labs has used 86% of its monthly AI budget with 9 days left in cycle.",
+    detail: "Aster Labs has used 86% of its monthly model budget with 9 days left in cycle.",
     action: "Recommend savings-first policy for non-critical routes"
   },
   {
@@ -335,7 +335,7 @@ export const approvalQueue = [
   {
     request: "Enable DeepSeek for PilotForge coding routes",
     owner: "founder@pilotforge.co",
-    reason: "Lower-cost reasoning for prototype debugging",
+    reason: "Lower-cost reasoning for early product debugging",
     risk: "low",
     age: "1h"
   }
@@ -471,7 +471,7 @@ export const workspaceAuditTrail = [
 
 export const workspaceQuota = [
   { label: "Monthly routes", value: "24,000 / 30,000", percent: 80 },
-  { label: "AI budget", value: "$3,056 / $4,000", percent: 76 },
+  { label: "Model budget", value: "$3,056 / $4,000", percent: 76 },
   { label: "Parallel runs", value: "1,284 / 2,000", percent: 64 },
   { label: "Shared exports", value: "168 / 250", percent: 67 }
 ];

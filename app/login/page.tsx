@@ -15,9 +15,9 @@ export default function LoginPage() {
             nexns
           </div>
           <p className="mt-8 text-sm uppercase tracking-[0.24em] text-primary">Secure access</p>
-          <h1 className="mt-3 text-3xl font-semibold">Sign in to your AI routing workspace</h1>
+          <h1 className="mt-3 text-3xl font-semibold">Sign in to your routing workspace</h1>
           <p className="mt-3 text-sm leading-6 text-muted-foreground">
-            Secure workspace access for teams, organizations, SSO, and role-based AI governance.
+            Secure workspace access for teams, organizations, SSO, and role-based governance.
           </p>
           <div className="mt-6 space-y-3">
             <Input placeholder="name@company.com" type="email" />
@@ -42,7 +42,7 @@ export default function LoginPage() {
       <section className="hidden border-l border-white/10 bg-white/[0.03] p-10 backdrop-blur-xl lg:flex lg:items-center">
         <div className="mx-auto max-w-xl">
           <KeyRound className="text-primary" size={32} />
-          <h2 className="mt-6 text-4xl font-semibold">Enterprise-ready access for governed AI operations.</h2>
+          <h2 className="mt-6 text-4xl font-semibold">Enterprise-ready access for governed operations.</h2>
           <div className="mt-8 grid gap-3">
             {[
               "Workspace-level provider keys",

@@ -55,7 +55,7 @@ export function MetricsDashboard() {
         <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <p className="text-sm uppercase tracking-[0.24em] text-primary">CFO-ready ROI</p>
-            <h2 className="mt-3 text-3xl font-semibold">Saved $2,228 in AI spend this month</h2>
+            <h2 className="mt-3 text-3xl font-semibold">Saved $2,228 in model spend this month</h2>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground">
               nexns turns model choice from guesswork into policy. It avoids unnecessary premium calls,
               preserves answer quality, and records cost, latency, fallback behavior, and manual override impact.
@@ -226,7 +226,7 @@ function SpendAvoidedChart() {
     <section className="motion-card rounded-2xl border border-white/10 bg-card p-5">
       <div className="mb-5 flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-semibold">AI spend avoided</h2>
+          <h2 className="text-lg font-semibold">Model spend avoided</h2>
           <p className="text-sm text-muted-foreground">Actual spend and avoided cost by day</p>
         </div>
         <span className="rounded-full bg-primary/10 px-3 py-1 text-sm text-primary">Avoided $2,228</span>

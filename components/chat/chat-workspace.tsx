@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
   Award,
+  BarChart3,
   Bot,
   BrainCircuit,
   Activity,
@@ -12,6 +13,7 @@ import {
   ImagePlus,
   Library,
   Home,
+  KeyRound,
   Mic,
   PanelLeft,
   Paperclip,
@@ -304,6 +306,26 @@ export function ChatWorkspace() {
               </Button>
             </Link>
           </motion.header>
+
+          <nav className="grid grid-cols-3 gap-2 border-b border-white/10 bg-background/35 px-4 py-2 backdrop-blur-2xl sm:hidden">
+            {[
+              { href: "/", label: "Home", icon: Home },
+              { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
+              { href: "/settings/providers", label: "Providers", icon: KeyRound }
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.045] px-2 py-2 text-[11px] text-muted-foreground transition hover:border-primary/25 hover:text-foreground"
+                >
+                  <Icon size={14} />
+                  <span className="truncate">{item.label}</span>
+                </Link>
+              );
+            })}
+          </nav>
 
           <div className="flex-1 overflow-y-auto px-4 py-5 sm:px-6">
             <div className="mx-auto max-w-6xl space-y-5">

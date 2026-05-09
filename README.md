@@ -93,6 +93,16 @@ supabase db push
 supabase db reset
 ```
 
+## Vercel Deployment
+
+Deployment notes are in `docs/VERCEL_DEPLOYMENT.md`.
+
+The project is configured for Vercel with:
+
+- Node.js 20.x
+- `npm install --legacy-peer-deps`
+- `npm run build`
+
 ## Environment
 
 The app can run without real AI keys for local development. For real streaming, configure one or more provider keys:

@@ -26,7 +26,7 @@ const exports = [
   },
   {
     title: "Email brief",
-    description: "Send a weekly AI spend and quality digest to operators, finance, and workspace owners.",
+    description: "Send a weekly model spend and quality digest to operators, finance, and workspace owners.",
     icon: Mail,
     status: "planned"
   }
