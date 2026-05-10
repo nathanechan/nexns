@@ -79,7 +79,7 @@ export default function PolicyEnginePage() {
           <div className="relative p-6 sm:p-8">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(20,184,166,0.18),transparent_32%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_45%)]" />
             <div className="relative">
-              <Badge className="border-primary/30 bg-primary/10 text-primary">V6.5 governance layer</Badge>
+              <Badge className="border-primary/30 bg-primary/10 text-primary">Governance layer</Badge>
               <SlidersHorizontal className="mt-6 text-primary" size={30} />
               <h1 className="mt-5 max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
                 Route every prompt through business policy, not just model preference.
@@ -243,7 +243,7 @@ export default function PolicyEnginePage() {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="font-medium">{item.request}</h3>
-                    <p className="mt-1 text-xs text-muted-foreground">{item.owner} · {item.age}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">{item.owner} / {item.age}</p>
                   </div>
                   <RiskBadge risk={item.risk} />
                 </div>

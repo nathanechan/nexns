@@ -4,16 +4,17 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import {
   Award,
-  BarChart3,
   Bot,
   BrainCircuit,
   Activity,
+  ChevronUp,
   Clock,
   FolderKanban,
   ImagePlus,
+  Layers3,
   Library,
   Home,
-  KeyRound,
+  Menu,
   Mic,
   PanelLeft,
   Paperclip,
@@ -23,11 +24,14 @@ import {
   Pin,
   RotateCcw,
   Send,
+  Settings,
   Share2,
+  SlidersHorizontal,
   Sparkles,
-  Volume2
+  Volume2,
+  X
 } from "lucide-react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import { demoMessages, manualVsAuto } from "@/lib/demo-data";
 import type { ChatMessage, RouteCandidate, RouteDecision, RouteMode, UserPriority } from "@/lib/types";
@@ -79,6 +83,7 @@ export function ChatWorkspace() {
   const [attachments, setAttachments] = useState<Array<{ name: string; type: string; size: number; progress: number }>>([]);
   const [shareNotice, setShareNotice] = useState("");
   const [composerFocused, setComposerFocused] = useState(false);
+  const [routeSheetOpen, setRouteSheetOpen] = useState(false);
 
   const parallelResponses = useMemo(() => decision?.parallel ?? [], [decision]);
 
@@ -96,6 +101,7 @@ export function ChatWorkspace() {
     setMessages((current) => [...current, userMessage]);
     setInput("");
     setIsRouting(true);
+    setRouteSheetOpen(true);
 
     const assistantId = crypto.randomUUID();
     setMessages((current) => [
@@ -300,34 +306,34 @@ export function ChatWorkspace() {
               </Button>
               <ThemeToggle />
             </div>
-            <Link href="/" className="sm:hidden">
-              <Button variant="secondary" size="icon" title="Back to home">
-                <Home size={17} />
-              </Button>
-            </Link>
+            <div className="flex gap-2 sm:hidden">
+              <Link href="/">
+                <Button variant="secondary" size="icon" title="Back to home">
+                  <Home size={17} />
+                </Button>
+              </Link>
+              <Link href="/navigation">
+                <Button variant="secondary" size="icon" title="Open navigation">
+                  <Menu size={17} />
+                </Button>
+              </Link>
+              <Link href="/settings">
+                <Button variant="secondary" size="icon" title="Open settings">
+                  <Settings size={17} />
+                </Button>
+              </Link>
+            </div>
           </motion.header>
 
-          <nav className="grid grid-cols-3 gap-2 border-b border-white/10 bg-background/35 px-4 py-2 backdrop-blur-2xl sm:hidden">
-            {[
-              { href: "/", label: "Home", icon: Home },
-              { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
-              { href: "/settings/providers", label: "Providers", icon: KeyRound }
-            ].map((item) => {
-              const Icon = item.icon;
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="flex items-center justify-center gap-1.5 rounded-xl border border-white/10 bg-white/[0.045] px-2 py-2 text-[11px] text-muted-foreground transition hover:border-primary/25 hover:text-foreground"
-                >
-                  <Icon size={14} />
-                  <span className="truncate">{item.label}</span>
-                </Link>
-              );
-            })}
-          </nav>
+          <MobileRouteCommand
+            decision={decision}
+            isRouting={isRouting}
+            mode={mode}
+            priority={priority}
+            onOpenRoute={() => setRouteSheetOpen(true)}
+          />
 
-          <div className="flex-1 overflow-y-auto px-4 py-5 sm:px-6">
+          <div className="flex-1 overflow-y-auto px-4 py-5 pb-32 sm:px-6 sm:pb-5">
             <div className="mx-auto max-w-6xl space-y-5">
               {messages.map((message) => (
                 <MessageBubble
@@ -338,7 +344,12 @@ export function ChatWorkspace() {
               ))}
 
               {(isRouting || decision) && (
-                <RouteTimeline decision={decision} isRouting={isRouting} attachmentsCount={attachments.length} />
+                <>
+                  <div className="hidden sm:block">
+                    <RouteTimeline decision={decision} isRouting={isRouting} attachmentsCount={attachments.length} />
+                  </div>
+                  <MobileRoutePulse decision={decision} isRouting={isRouting} onOpenRoute={() => setRouteSheetOpen(true)} />
+                </>
               )}
 
               {(isRouting || decision) && (
@@ -346,7 +357,7 @@ export function ChatWorkspace() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.42, ease: softEase }}
-                  className="xl:hidden"
+                  className="hidden sm:block xl:hidden"
                 >
                   <RoutingPanel decision={decision} isRouting={isRouting} />
                 </motion.div>
@@ -392,13 +403,13 @@ export function ChatWorkspace() {
             </div>
           </div>
 
-          <footer className="border-t border-white/10 bg-background/30 p-4 backdrop-blur-2xl sm:p-5">
+          <footer className="sticky bottom-0 z-30 border-t border-white/10 bg-background/72 p-3 backdrop-blur-2xl sm:p-5">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: softEase }}
               className={cn(
-                "mx-auto max-w-5xl rounded-2xl border bg-card p-3 transition duration-300",
+                "mx-auto max-w-5xl rounded-[1.35rem] border bg-card p-3 transition duration-300",
                 composerFocused ? "border-primary/35 shadow-glow" : "border-white/10"
               )}
             >
@@ -455,44 +466,46 @@ export function ChatWorkspace() {
                 </motion.div>
               )}
               <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
-                <div className="flex flex-wrap gap-2">
-                {(["auto", "parallel", "manual"] as RouteMode[]).map((item) => (
-                  <motion.button
-                    layout
-                    key={item}
-                    onClick={() => setMode(item)}
-                    className={cn(
-                      "focus-ring rounded-xl px-3 py-1.5 text-sm capitalize transition",
-                      mode === item ? "bg-primary text-primary-foreground shadow-glow" : "bg-white/[0.07] text-muted-foreground hover:bg-white/[0.1]"
-                    )}
-                  >
-                    {item}
-                  </motion.button>
-                ))}
-                <select
-                  value={priority}
-                  onChange={(event) => setPriority(event.target.value as UserPriority)}
-                  className="focus-ring rounded-xl border border-white/10 bg-background px-3 py-1.5 text-sm"
-                >
-                  <option value="balanced">Balanced</option>
-                  <option value="quality">Quality</option>
-                  <option value="speed">Speed</option>
-                  <option value="savings">Savings</option>
-                  <option value="freshness">Freshness</option>
-                </select>
-                {mode === "manual" && (
+                <div className="flex max-w-full gap-2 overflow-x-auto pb-1 sm:flex-wrap sm:overflow-visible sm:pb-0">
+                  {(["auto", "parallel", "manual"] as RouteMode[]).map((item) => (
+                    <motion.button
+                      layout
+                      key={item}
+                      onClick={() => setMode(item)}
+                      className={cn(
+                        "focus-ring shrink-0 rounded-full px-3 py-1.5 text-sm capitalize transition",
+                        mode === item
+                          ? "bg-primary text-primary-foreground shadow-glow"
+                          : "bg-white/[0.07] text-muted-foreground hover:bg-white/[0.1]"
+                      )}
+                    >
+                      {item}
+                    </motion.button>
+                  ))}
                   <select
-                    value={manualModelId}
-                    onChange={(event) => setManualModelId(event.target.value)}
-                    className="focus-ring rounded-xl border border-white/10 bg-background px-3 py-1.5 text-sm"
+                    value={priority}
+                    onChange={(event) => setPriority(event.target.value as UserPriority)}
+                    className="focus-ring shrink-0 rounded-full border border-white/10 bg-background px-3 py-1.5 text-sm"
                   >
-                    {MODEL_REGISTRY.map((model) => (
-                      <option key={model.id} value={model.id}>
-                        {model.name}
-                      </option>
-                    ))}
+                    <option value="balanced">Balanced</option>
+                    <option value="quality">Quality</option>
+                    <option value="speed">Speed</option>
+                    <option value="savings">Savings</option>
+                    <option value="freshness">Freshness</option>
                   </select>
-                )}
+                  {mode === "manual" && (
+                    <select
+                      value={manualModelId}
+                      onChange={(event) => setManualModelId(event.target.value)}
+                      className="focus-ring shrink-0 rounded-full border border-white/10 bg-background px-3 py-1.5 text-sm"
+                    >
+                      {MODEL_REGISTRY.map((model) => (
+                        <option key={model.id} value={model.id}>
+                          {model.name}
+                        </option>
+                      ))}
+                    </select>
+                  )}
                 </div>
                 <ComposerSignal mode={mode} priority={priority} attachmentsCount={attachments.length} />
               </div>
@@ -522,6 +535,9 @@ export function ChatWorkspace() {
                   <Button variant="ghost" size="icon" title="Copy routing report" onClick={copyShareSummary}>
                     <Download size={17} />
                   </Button>
+                  <Button className="sm:hidden" variant="ghost" size="icon" title="Routing details" onClick={() => setRouteSheetOpen(true)}>
+                    <SlidersHorizontal size={17} />
+                  </Button>
                 </div>
                 <div className="flex items-center gap-3">
                   {shareNotice && <span className="text-xs text-muted-foreground">{shareNotice}</span>}
@@ -533,6 +549,13 @@ export function ChatWorkspace() {
               </div>
             </motion.div>
           </footer>
+
+          <MobileRoutingSheet
+            open={routeSheetOpen}
+            decision={decision}
+            isRouting={isRouting}
+            onClose={() => setRouteSheetOpen(false)}
+          />
         </section>
 
         <motion.section
@@ -546,6 +569,175 @@ export function ChatWorkspace() {
         </motion.section>
       </div>
     </main>
+  );
+}
+
+function MobileRouteCommand({
+  decision,
+  isRouting,
+  mode,
+  priority,
+  onOpenRoute
+}: {
+  decision?: RouteDecision;
+  isRouting: boolean;
+  mode: RouteMode;
+  priority: UserPriority;
+  onOpenRoute: () => void;
+}) {
+  const status = isRouting ? "Evaluating route" : decision ? decision.primary.model.name : "Router ready";
+  const confidence = decision ? `${decision.confidence}%` : "standby";
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.38, ease: softEase }}
+      className="sticky top-0 z-20 border-b border-white/10 bg-background/72 px-3 py-2 backdrop-blur-2xl sm:hidden"
+    >
+      <button
+        type="button"
+        onClick={onOpenRoute}
+        className="focus-ring route-scan flex w-full items-center justify-between gap-3 rounded-[1.2rem] border border-primary/20 bg-primary/[0.075] px-3 py-3 text-left shadow-panel"
+      >
+        <span className="flex min-w-0 items-center gap-3">
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/15 text-primary">
+            <Layers3 size={17} />
+          </span>
+          <span className="min-w-0">
+            <span className="block truncate text-sm font-medium">{status}</span>
+            <span className="mt-0.5 flex flex-wrap gap-1.5 text-[11px] text-muted-foreground">
+              <span>{mode}</span>
+              <span>/</span>
+              <span>{priority}</span>
+              <span>/</span>
+              <span>{confidence}</span>
+            </span>
+          </span>
+        </span>
+        <span className="flex shrink-0 items-center gap-2 text-xs text-primary">
+          {isRouting && <span className="breathing-dot h-2 w-2 rounded-full bg-primary text-primary" />}
+          Route
+          <ChevronUp size={15} />
+        </span>
+      </button>
+    </motion.section>
+  );
+}
+
+function MobileRoutePulse({
+  decision,
+  isRouting,
+  onOpenRoute
+}: {
+  decision?: RouteDecision;
+  isRouting: boolean;
+  onOpenRoute: () => void;
+}) {
+  const metrics = decision
+    ? [
+        ["Model", decision.primary.model.name],
+        ["Save", `${decision.expectedSavings}%`],
+        ["Latency", `${decision.primary.estimatedLatencyMs}ms`]
+      ]
+    : [
+        ["Intent", "reading"],
+        ["Models", "scoring"],
+        ["Policy", "checking"]
+      ];
+
+  return (
+    <motion.button
+      type="button"
+      onClick={onOpenRoute}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.42, ease: softEase }}
+      className="route-scan w-full rounded-[1.35rem] border border-primary/20 bg-primary/[0.07] p-4 text-left shadow-panel sm:hidden"
+    >
+      <div className="flex items-center justify-between gap-3">
+        <div>
+          <p className="text-xs uppercase tracking-[0.22em] text-primary">
+            {isRouting ? "Live routing" : "Route captured"}
+          </p>
+          <h2 className="mt-1 text-lg font-semibold">
+            {decision ? `${decision.intent} routed with ${decision.confidence}% confidence` : "Classifier is preparing the route"}
+          </h2>
+        </div>
+        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-primary/30 bg-primary/15 text-primary">
+          <SlidersHorizontal size={18} />
+        </span>
+      </div>
+      <div className="mt-4 grid grid-cols-3 gap-2">
+        {metrics.map(([label, value]) => (
+          <div key={label} className="rounded-2xl border border-white/10 bg-black/15 p-2">
+            <p className="text-[11px] text-muted-foreground">{label}</p>
+            <p className="mt-1 truncate text-sm font-medium">{value}</p>
+          </div>
+        ))}
+      </div>
+    </motion.button>
+  );
+}
+
+function MobileRoutingSheet({
+  open,
+  decision,
+  isRouting,
+  onClose
+}: {
+  open: boolean;
+  decision?: RouteDecision;
+  isRouting: boolean;
+  onClose: () => void;
+}) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <div className="fixed inset-0 z-50 sm:hidden">
+          <motion.button
+            type="button"
+            aria-label="Close routing details"
+            className="absolute inset-0 bg-black/45 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
+          />
+          <motion.section
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile routing details"
+            initial={{ y: "100%", opacity: 0.94 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: "100%", opacity: 0.94 }}
+            transition={{ duration: 0.42, ease: softEase }}
+            className="absolute inset-x-0 bottom-0 max-h-[82vh] overflow-hidden rounded-t-[2rem] border border-white/10 bg-background/95 shadow-panel backdrop-blur-2xl"
+          >
+            <div className="flex items-center justify-center pt-3">
+              <span className="h-1.5 w-12 rounded-full bg-white/20" />
+            </div>
+            <div className="flex items-start justify-between gap-3 border-b border-white/10 px-4 py-4">
+              <div>
+                <p className="text-xs uppercase tracking-[0.22em] text-primary">Routing control</p>
+                <h2 className="mt-1 text-xl font-semibold">
+                  {isRouting ? "Scoring the best route" : decision ? "Route decision" : "Router standby"}
+                </h2>
+              </div>
+              <Button variant="ghost" size="icon" title="Close routing details" onClick={onClose}>
+                <X size={18} />
+              </Button>
+            </div>
+            <div className="max-h-[calc(82vh-92px)] overflow-y-auto p-4 pb-8">
+              <RoutingPanel decision={decision} isRouting={isRouting} />
+              <div className="mt-4">
+                <MiniRoutingScorecard decision={decision} />
+              </div>
+            </div>
+          </motion.section>
+        </div>
+      )}
+    </AnimatePresence>
   );
 }
 
