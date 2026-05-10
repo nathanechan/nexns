@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { BarChart3, Bot, CreditCard, Home, Settings, Share2, ShieldCheck, Sparkles, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { MobileDock } from "@/components/navigation/mobile-dock";
 import { cn } from "@/lib/utils";
 
 const items = [
@@ -13,7 +14,7 @@ const items = [
   { href: "/dashboard", label: "Dashboard", icon: BarChart3 },
   { href: "/admin", label: "Admin", icon: ShieldCheck },
   { href: "/workspace", label: "Workspace", icon: Users },
-  { href: "/settings/providers", label: "Settings", icon: Settings },
+  { href: "/settings", label: "Settings", icon: Settings },
   { href: "/share", label: "Share", icon: Share2 },
   { href: "/pricing", label: "Pricing", icon: CreditCard }
 ];
@@ -54,29 +55,7 @@ export function SiteNav() {
           </Link>
         </div>
       </div>
-      <nav className="border-t border-white/10 px-3 py-2 lg:hidden" aria-label="Mobile primary navigation">
-        <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto pb-1">
-          {items.slice(0, 7).map((item) => {
-            const active = pathname === item.href || (item.href !== "/" && pathname.startsWith(item.href));
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  "flex min-w-[76px] flex-col items-center justify-center gap-1 rounded-2xl border px-3 py-2 text-[11px] transition",
-                  active
-                    ? "border-primary/40 bg-primary text-primary-foreground shadow-glow"
-                    : "border-white/10 bg-white/[0.045] text-muted-foreground hover:border-primary/25 hover:text-foreground"
-                )}
-              >
-                <Icon size={16} />
-                <span className="max-w-full truncate">{item.label}</span>
-              </Link>
-            );
-          })}
-        </div>
-      </nav>
+      <MobileDock />
     </header>
   );
 }

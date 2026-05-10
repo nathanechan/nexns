@@ -9,17 +9,18 @@ import {
   CreditCard,
   DatabaseZap,
   HelpCircle,
-  Home,
   Search,
   Settings,
   Share2,
   ShieldCheck,
+  SlidersHorizontal,
   Sparkles,
   Users
 } from "lucide-react";
 import { LanguageToggle } from "@/components/i18n/language-toggle";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { useLanguage } from "@/components/i18n/language-provider";
+import { MobileDock } from "@/components/navigation/mobile-dock";
 import { Button } from "@/components/ui/button";
 import { StatusChip } from "@/components/ui/status-chip";
 import { cn } from "@/lib/utils";
@@ -37,17 +38,10 @@ const routeKeys = [
   { href: "/admin", key: "admin", icon: ShieldCheck },
   { href: "/workspace", key: "workspace", icon: Users },
   { href: "/settings/providers", key: "providers", icon: DatabaseZap },
-  { href: "/settings/policy", key: "policy", icon: Settings },
+  { href: "/settings/policy", key: "policy", icon: SlidersHorizontal },
+  { href: "/settings", key: "settings", icon: Settings },
   { href: "/share", key: "share", icon: Share2 },
   { href: "/pricing", key: "pricing", icon: CreditCard }
-] as const;
-
-const mobileRouteKeys = [
-  { href: "/", label: "Home", icon: Home },
-  { href: "/chat", key: "chat", icon: Bot },
-  { href: "/dashboard", key: "dashboard", icon: BarChart3 },
-  { href: "/workspace", key: "workspace", icon: Users },
-  { href: "/settings/providers", key: "providers", icon: DatabaseZap }
 ] as const;
 
 export function AppShell({ children, title, description, actions }: AppShellProps) {
@@ -83,7 +77,10 @@ export function AppShell({ children, title, description, actions }: AppShellProp
 
           <nav className="mt-6 space-y-1">
             {routeKeys.map((item) => {
-              const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+              const active =
+                item.href === "/settings"
+                  ? pathname === "/settings"
+                  : pathname === item.href || pathname.startsWith(`${item.href}/`);
               const Icon = item.icon;
               return (
                 <Link
@@ -114,9 +111,6 @@ export function AppShell({ children, title, description, actions }: AppShellProp
           <header className="sticky top-0 z-40 border-b border-white/10 bg-background/62 backdrop-blur-2xl">
             <div className="flex min-h-16 items-center justify-between gap-4 px-4 sm:px-6">
               <div className="flex min-w-0 flex-1 items-center gap-3">
-                <Link href="/" className="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/[0.055] text-muted-foreground transition hover:text-foreground lg:hidden">
-                  <Home size={17} />
-                </Link>
                 <div className="hidden min-w-[320px] items-center gap-2 rounded-xl border border-white/10 bg-white/[0.055] px-3 py-2 text-sm text-muted-foreground shadow-[inset_0_1px_0_rgba(255,255,255,0.07)] md:flex">
                   <Search size={16} />
                   {t.shell.command}
@@ -163,26 +157,7 @@ export function AppShell({ children, title, description, actions }: AppShellProp
         </section>
       </div>
 
-      <nav className="fixed inset-x-3 bottom-3 z-50 grid grid-cols-5 gap-1 rounded-2xl border border-white/10 bg-background/88 p-1 shadow-panel backdrop-blur-2xl lg:hidden">
-        {mobileRouteKeys.map((item) => {
-          const active = item.href === "/" ? pathname === "/" : pathname === item.href || pathname.startsWith(`${item.href}/`);
-          const Icon = item.icon;
-          const label = "key" in item ? t.nav[item.key] : item.label;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex flex-col items-center justify-center gap-1 rounded-xl px-2 py-2 text-[11px] transition",
-                active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-white/[0.07] hover:text-foreground"
-              )}
-            >
-              <Icon size={16} />
-              <span className="max-w-full truncate">{label}</span>
-            </Link>
-          );
-        })}
-      </nav>
+      <MobileDock />
     </main>
   );
 }
